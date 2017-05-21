@@ -11,7 +11,6 @@
 p "year?"
 year = gets.chomp.to_i
 
-
 def isYearLeap?(year)
   leapYear = false 
   #p "1#{leapYear}" 
@@ -31,4 +30,7 @@ def isYearLeap?(year)
   return leapYear
 end
 
+months = {1=>31, 2=>isYearLeap?(year) ? 29 : 28, 3=>31, 4=>30, 5=> 31, 6=>30, 7=>31, 8=>31, 9=>30, 10=>31, 11=>30, 12=>31}
+
 p isYearLeap?(year)
+p months
