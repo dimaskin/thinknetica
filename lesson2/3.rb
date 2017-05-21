@@ -9,9 +9,4 @@ arr = []
     arr << arr[-2] + arr[-1]
   end
 end
-
 p arr
-
-for x in (0..100) do
-  #p x
-end
