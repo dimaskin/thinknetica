@@ -13,26 +13,32 @@ p "year?"
 year = gets.chomp.to_i
 
 def isYearLeap?(year)
+
   leapYear = false 
-  if year%4 == 0 
-    leapYear = true
-    if year%100 == 0
-      leapYear = false
-      if year%400 == 0 
-        leapYear = true
-      end
-    end
-  end
-  return leapYear
+  return leapYear = true if (year%4 == 0 && year%100 != 0) ||  year%400 == 0 
+
 end
 
-months = {1=>31, 2=>isYearLeap?(year) ? 29 : 28, 3=>31, 4=>30, 5=> 31, 6=>30, 7=>31, 8=>31, 9=>30, 10=>31, 11=>30, 12=>31}
-i = 0
-months.each do |k,v| 
-  if k < month
-    i += v
+#months = {1=>31, 2=>isYearLeap?(year) ? 29 : 28, 3=>31, 4=>30, 5=> 31, 6=>30, 7=>31, 8=>31, 9=>30, 10=>31, 11=>30, 12=>31}
+
+days_in_feb = isYearLeap?(year) ? 29 : 28
+months = [31, days_in_feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+quantity_days = 0
+current_month = 1
+months.each do |quantity_days_in_current_mounth|
+  if current_month < month
+    quantity_days += quantity_days_in_current_mounth
   end
+  current_month += 1
 end
-i += day
-p "Количество дней с начала года #{i}"
+
+#months.each do |current_month, quantity_days_in_current_mounth| 
+#  if current_month < month
+#    quantity_days += quantity_days_in_current_mounth
+#  end
+#end
+
+quantity_days += day
+#p "Этот год високосный: #{isYearLeap?(year)}"
+p "Количество дней с начала года #{quantity_days}"
 p "Проверка #{Date.new(year,month,day).yday}"

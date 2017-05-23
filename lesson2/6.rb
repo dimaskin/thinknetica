@@ -20,12 +20,12 @@ loop do
     current_item = result[item]
     if current_item.has_key? (price)
       current_quantity = current_item[price]
-      result[item].merge!({price => quantity + current_quantity})
+      result[item] = {price => quantity + current_quantity}
     else
-      result[item].merge!({price => quantity})
+      result[item] = {price => quantity}
     end
   else
-    result.merge!({item => {price => quantity}})
+    result[item] = {price => quantity}
   end
 
 end
@@ -33,12 +33,14 @@ end
 p result
 
 sum_global = 0
-result.each_pair do |key, value|
+result.each_pair do |item, price_quantity|
   sum_item = 0
-  value.each_pair do |price, quantity|
+
+  price_quantity.each_pair do |price, quantity|
     sum_item += price * quantity
   end
-  puts "item #{key}, sum_item #{sum_item}"  
+
+  puts "item #{item}, sum_item #{sum_item}"  
   sum_global += sum_item
 end  
 
