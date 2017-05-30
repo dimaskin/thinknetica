@@ -12,4 +12,40 @@
 #Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
 class Train
 
+  attr_accessor :speed, :current_station
+  attr_reader   :wagon_count, :route, :type
+
+  def initialize(number, type, wagon_count)
+    @number = number
+    @type = type
+    @wagon_count = wagon_count
+  end
+
+  def change_wagon_count(operation)
+    if @speed == 0
+      if operation == "add"
+        @wagon_count += 1
+      elsif operation =="del"
+        @wagon_count -= 1
+      else
+        p "what operation?"
+      end
+    end
+  end
+
+  def set_route(route)
+    @route = route
+    @current_station = route.station_list[0]
+    @current_station.admission_train(self)
+  end
+
+  def go_next_station
+    #prev_station
+    @current_station = @route.station_list[@route.station_list.index(@current_station)+1]
+  end
+  def go_prev_station
+    @current_station = @route.station_list[@route.station_list.index(@current_station)-1]
+  end
+
+
 end
