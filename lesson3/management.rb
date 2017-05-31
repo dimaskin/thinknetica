@@ -24,23 +24,23 @@ train4.set_route(route2)
 
 route1.add_station(st3)
 route1.add_station(st2)
-p st1.train_in_station
+#p st1.train_in_station
 #p route1.station_list
 #route1.del_station(st2)
 #p route1.station_list
 
 p train1.current_station
-train1.next_station
+train1.go_next_station
 p train1.current_station
-train1.next_station
+train1.go_next_station
 p train1.current_station
-train1.prev_station
+train1.go_prev_station
 p train1.current_station
 
-st1.admission_train(train1)
-st1.admission_train(train4)
+#st1.admission_train(train1)
+#st1.admission_train(train4)
 
-st1.dispatch_train(train1)
+#st1.dispatch_train(train1)
 #p "all train"
 #st1.list_of_train_in_station
 #p "pass train"

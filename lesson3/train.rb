@@ -40,12 +40,15 @@ class Train
   end
 
   def go_next_station
-    #prev_station
+    #prev_station     = @current_station
+    @current_station.dispatch_train(self)
     @current_station = @route.station_list[@route.station_list.index(@current_station)+1]
+    @current_station.admission_train(self)    
   end
   def go_prev_station
+    @current_station.dispatch_train(self)
     @current_station = @route.station_list[@route.station_list.index(@current_station)-1]
+    @current_station.admission_train(self)    
   end
-
 
 end
