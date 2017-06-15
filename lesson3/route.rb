@@ -15,29 +15,29 @@ class Route
   #station_list должен быть attr_reader, т.к. нельзя этот список напрямую менять
 
   #attr_accessor :station_list, :start_station, :end_station
-  attr_reader :station_list
+  attr_reader :stations
 
   def initialize(start_station, end_station)
-    @station_list = []
-    @station_list  << start_station << end_station
+    @stations = []
+    @stations  << start_station << end_station
   end
 
   def add_station(station)
-    station_list.insert(-2,station)
+    stations.insert(-2,station)
   end
 
   def del_station(station)
     #Используй лучше метод delete
     #station_list.reject!{|current_station| current_station == station }
-    station_list.delete(station)
+    stations.delete(station)
   end
 
-  def show_start_station
-    station_list.first
+  def start_station
+    stations.first
   end
 
-  def show_end_station
-    station_list.last
+  def end_station
+    stations.last
   end
 
 end
