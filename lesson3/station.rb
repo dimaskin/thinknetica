@@ -8,27 +8,28 @@
 
 class Station
 
-  attr_reader :train_in_station
+  #Лучше просто trains, мы же и так в классе Station, понятно, что это поезда на станции, а не где-то еще
+  attr_reader :trains
 
   def initialize(station_name)
     @station_name = station_name
-    @train_in_station = []
+    @trains = []
   end
 
   def admission_train(train)
-    @train_in_station << train
+    @trains << train
   end
 
   def list_of_train_in_station(type=nil)
     if !type 
-      p @train_in_station
+      p @trains
     else
-      p "#{type} trains: #{@train_in_station.select {|current_train_in_station| current_train_in_station.type == type}}" 
+      p "#{type} trains: #{@trains.select {|current_train_in_station| current_train_in_station.type == type}}" 
     end
   end
 
   def dispatch_train(train)
-    @train_in_station.delete(train)
+    @trains.delete(train)
   end
 
 end

@@ -21,17 +21,29 @@ class Train
     @wagon_count = wagon_count
   end
 
-  def change_wagon_count(operation)
-    if @speed == 0
-      if operation == "add"
-        @wagon_count += 1
-      elsif operation =="del"
-        @wagon_count -= 1
-      else
-        p "what operation?"
-      end
-    end
+  #Разбей это на 2 отдельных метода. У методов и классов должна быть одна ответсвтенность, 
+  #т.е. они должны делать одну, четко обозначенную вещь.
+  #def change_wagon_count(operation)
+  #  if @speed == 0
+  #    if operation == "add"
+  #      @wagon_count += 1
+  #    elsif operation =="del"
+  #      @wagon_count -= 1
+  #    else
+  #      p "what operation?"
+  #    end
+  #  end
+  #end
+  
+  def add_wagon
+    @wagon_count += 1 if @speed == 0
   end
+  def del_wagon 
+    #Если вагонов не было, будет отрицательное кол-во
+    if @speed == 0 && @wagon_count > 0
+      @wagon_count -= 1
+    end
+  end  
 
   def set_route(route)
     @route = route
@@ -40,13 +52,22 @@ class Train
   end
 
   def go_next_station
-    #prev_station
-    next_station = @route.station_list[@route.station_list.index(@current_station)+1]
+    @current_station.dispatch_train(self)
+    @current_station = @route.station_list[@route.station_list.index(@current_station)+1]
+    @current_station.admission_train(self)    
   end
 
   def go_prev_station
+    @current_station.dispatch_train(self)
     @current_station = @route.station_list[@route.station_list.index(@current_station)-1]
+    @current_station.admission_train(self)    
   end
 
+  def show_next_station
+    @route.station_list[@route.station_list.index(@current_station)+1]
+  end
 
+  def show_prev_station
+    @route.station_list[@route.station_list.index(@current_station)-1]
+  end
 end
