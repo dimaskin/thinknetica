@@ -8,16 +8,6 @@ class Train
     @wagons = []
   end
 
-  protected
-
-  def add_wagon(wagon)
-    wagons << wagon
-  end
-
-  def del_wagon(wagon)
-    wagons.delete(wagon)
-  end  
-
   def set_route(route)
     @route = route
     @current_station = route.stations[0]
@@ -43,4 +33,18 @@ class Train
   def prev_station
     @route.stations[@route.stations.index(@current_station)-1]
   end
+
+  def del_wagon(wagon)
+    wagons.delete(wagon)
+  end  
+
+  #у каждого поезда есть действия выше (для удаления вагона не важно знать его тип)
+  protected
+
+  #здесь необходимо знать тип вагона, выносим метод в дочерний класс, там и присваиваем тип вагону
+  def add_wagon(wagon)
+    wagons << wagon
+  end
+
+
 end
