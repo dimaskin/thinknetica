@@ -93,13 +93,44 @@ p "10. Поехать к следующей станции"
 p "11. Вернуться к предыдущей станции"
 p "12. Просмотреть список станций"
 p "13. Просмотреть список поездов на станции"
+p "14. просмотреть список всех поездов"
+
+stations = []
+trains   = []
+
+def next_step
+  "next step, please"
+end
 
 begin
   answer = gets.chomp.to_i
   case answer
   when 1
     p "bay"
-  when 2
-    p 
+  when 2 
+    p "station name?"
+    st = gets.chomp.to_s
+    if st
+      stations << Station.new(st)
+      p stations.last
+      p next_step
+    else
+      p "station name is not valid!"
+    end 
+  when 3
+    p "train name?"
+    train_name = gets.chomp.to_s
+    p "train type? (1 - pass, 2 - cargo)"
+    train_type = gets.chomp.to_i
+    if train_type == 1 
+      PassengerTrain.new(train_name)
+    elsif train_type == 2
+      CargoTrain.new(train_name)
+    else 
+      p "type of train is not valid!"
+    end
+    p next_step
+  when 12
+    p stations
   end
 end while answer != 1
