@@ -84,8 +84,8 @@ p "1.  Завершить работу"
 p "2.  Создать станцию"
 p "3.  Создать поезд"
 p "4.  Создать маршрут"
-p "5.  Добавить станцию в текущий маршрут"
-p "6.  Удалить станцию из текущего маршрута"
+p "5.  Добавить станцию в маршрут"
+p "6.  Удалить станцию из маршрута"
 p "7.  Назначить маршрут поезду"
 p "8.  Добавить вагон к поезду"
 p "9.  Отцепить вагон от поезда"
@@ -158,6 +158,44 @@ begin
     finish_station = tmp_station.delete_at(finish_number-1)
     routes << Route.new(start_station, finish_station)
     p routes.last
+    p next_step
+  when 5    #---------------------------------------------
+    p "Choose route to add a station"
+    routes.each.with_index(1) do |route, index| 
+      p "#{index} - #{route}"
+    end
+    route_number  = gets.chomp.to_i
+    current_route = routes[route_number-1]
+    #without check now
+    tmp_station = stations
+    tmp_station.delete(current_route.start_station)
+    tmp_station.delete(current_route.end_station)
+    p "Choose station to add?"
+    tmp_station.each.with_index(1) do |st, index| 
+      p "#{index} - #{st.station_name}"
+    end
+    station_to_add = gets.chomp.to_i
+    current_route.add_station(tmp_station[station_to_add-1])
+    p current_route
+    p next_step
+  when 6
+    p "Choose route to del a station"
+    routes.each.with_index(1) do |route, index| 
+      p "#{index} - #{route}"
+    end
+    route_number  = gets.chomp.to_i
+    current_route = routes[route_number-1]
+    #without check now
+    tmp_station = stations
+    p "Choose station to delete?"
+    tmp_station.each.with_index(1) do |st, index| 
+      p "#{index} - #{st.station_name}"
+    end
+    station_to_del = gets.chomp.to_i
+    current_route.del_station(tmp_station[station_to_del-1])
+    p current_route
+    p next_step
+    
   when 12
     p stations
   when 13
