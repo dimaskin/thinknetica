@@ -97,6 +97,7 @@ p "14. просмотреть список всех поездов"
 
 stations = []
 trains   = []
+routes   = []
 
 def next_step
   "next step, please"
@@ -105,32 +106,63 @@ end
 begin
   answer = gets.chomp.to_i
   case answer
-  when 1
+  when 1    #---------------------------------------------
     p "bay"
-  when 2 
+  when 2    #---------------------------------------------
     p "station name?"
-    st = gets.chomp.to_s
-    if st
-      stations << Station.new(st)
+    station_name = gets.chomp.to_s
+    if station_name
+      stations << Station.new(station_name)
       p stations.last
       p next_step
     else
       p "station name is not valid!"
     end 
-  when 3
+  when 3    #---------------------------------------------
     p "train name?"
     train_name = gets.chomp.to_s
     p "train type? (1 - pass, 2 - cargo)"
     train_type = gets.chomp.to_i
     if train_type == 1 
-      PassengerTrain.new(train_name)
+      if train_name
+        trains << PassengerTrain.new(train_name)
+        p trains.last
+      else
+        p "train name is not valid!"
+      end
     elsif train_type == 2
-      CargoTrain.new(train_name)
+      if train_name
+        trains << CargoTrain.new(train_name)
+        p trains.last
+      else
+        p "train name is not valid!"
+      end
     else 
       p "type of train is not valid!"
     end
     p next_step
+  when 4    #---------------------------------------------
+    tmp_station = stations
+    p "Create new route. Choose start station?"
+    tmp_station.each.with_index(1) do |st, index| 
+      p "#{index} - #{st.station_name}"
+    end
+    #without check now
+    start_number = gets.chomp.to_i
+    start_station = tmp_station.delete_at(start_number-1)
+    p "Choose final station?"
+    tmp_station.each.with_index(1) do |st, index| 
+      p "#{index} - #{st.station_name}"
+    end
+    finish_number = gets.chomp.to_i
+    finish_station = tmp_station.delete_at(finish_number-1)
+    routes << Route.new(start_station, finish_station)
+    p routes.last
   when 12
     p stations
+  when 13
+
+  when 14
+    p trains
   end
 end while answer != 1
