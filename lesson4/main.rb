@@ -17,6 +17,7 @@ require_relative 'cargo_train'
 require_relative 'cargo_wagon'
 require_relative 'passenger_wagon'
 
+=begin
 #Создавать станции
 st1 = Station.new("st1")
 st2 = Station.new("st2")
@@ -24,8 +25,8 @@ st3 = Station.new("st3")
 st4 = Station.new("st4")
 
 #Создавать поезда
-pass_train1  = Passenger_Train.new("001")
-cargo_train1 = Cargo_Train.new("002")
+pass_train1  = PassengerTrain.new("001")
+cargo_train1 = CargoTrain.new("002")
 p pass_train1
 p cargo_train1
 p "----------1"
@@ -44,10 +45,10 @@ p pass_train1.route
 p "----------3"
 
 #Добавлять вагоны к поезду
-cargo_wagon1 = Cargo_Wagon.new()
-pass_wagon1  = Passenger_Wagon.new()
-pass_wagon2  = Passenger_Wagon.new()
-pass_wagon3  = Passenger_Wagon.new()
+cargo_wagon1 = CargoWagon.new()
+pass_wagon1  = PassengerWagon.new()
+pass_wagon2  = PassengerWagon.new()
+pass_wagon3  = PassengerWagon.new()
 
 pass_train1.add_wagon(pass_wagon1)
 pass_train1.add_wagon(pass_wagon2)
@@ -78,3 +79,27 @@ st2.list_of_train_in_station
 st3.list_of_train_in_station
 st4.list_of_train_in_station
 p "----------7"
+=end
+p "1.  Завершить работу"
+p "2.  Создать станцию"
+p "3.  Создать поезд"
+p "4.  Создать маршрут"
+p "5.  Добавить станцию в текущий маршрут"
+p "6.  Удалить станцию из текущего маршрута"
+p "7.  Назначить маршрут поезду"
+p "8.  Добавить вагон к поезду"
+p "9.  Отцепить вагон от поезда"
+p "10. Поехать к следующей станции"
+p "11. Вернуться к предыдущей станции"
+p "12. Просмотреть список станций"
+p "13. Просмотреть список поездов на станции"
+
+begin
+  answer = gets.chomp.to_i
+  case answer
+  when 1
+    p "bay"
+  when 2
+    p 
+  end
+end while answer != 1

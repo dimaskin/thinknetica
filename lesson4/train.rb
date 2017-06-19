@@ -6,6 +6,7 @@ class Train
   def initialize(number)
     @number = number
     @wagons = []
+    @speed  = 0
   end
 
   def set_route(route)
@@ -35,7 +36,7 @@ class Train
   end
 
   def del_wagon(wagon)
-    wagons.delete(wagon)
+    wagons.delete(wagon) if @speed == 0
   end  
 
   #у каждого поезда есть действия выше (для удаления вагона не важно знать его тип)
@@ -43,7 +44,7 @@ class Train
 
   #здесь необходимо знать тип вагона, выносим метод в дочерний класс, там и присваиваем тип вагону
   def add_wagon(wagon)
-    wagons << wagon
+    wagons << wagon if @speed == 0 
   end
 
 
