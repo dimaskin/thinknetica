@@ -7,30 +7,9 @@ require_relative 'cargo_train'
 require_relative 'cargo_wagon'
 require_relative 'passenger_wagon'
 
-=begin
-#Отцеплять вагоны от поезда
-pass_train1.del_wagon(pass_wagon3)
-p pass_train1
-p "----------5"
+#полностью переделал интерфейс управления
+#не совсем понял про скорость вагона, в какой момент она должна быть не 0 ?
 
-#Перемещать поезд по маршруту вперед и назад
-p pass_train1.current_station
-pass_train1.go_next_station
-p pass_train1.current_station
-pass_train1.go_next_station
-p pass_train1.current_station
-pass_train1.go_prev_station
-p pass_train1.current_station
-p "----------6"
-
-#Просматривать список станций и список поездов на станции
-p route1.stations
-st1.list_of_train_in_station
-st2.list_of_train_in_station
-st3.list_of_train_in_station
-st4.list_of_train_in_station
-p "----------7"
-=end
 p "1.  Завершить работу"
 p "2.  Создать станцию"
 p "3.  Создать поезд"
@@ -219,12 +198,41 @@ begin
 
     p current_train
     p next_step
-  when 10   #---------------------------------------------  
-    
+  when 11   #---------------------------------------------  
+    p "Choose train"
+    trains.each.with_index(1) do |train, index| 
+      p "#{index} - #{train.number}"
+    end
+    train_number = gets.chomp.to_i
+    current_train = trains[train_number-1]
+
+    current_train.go_next_station
+    p next_step
+  when 12   #---------------------------------------------  
+    p "Choose train"
+    trains.each.with_index(1) do |train, index| 
+      p "#{index} - #{train.number}"
+    end
+    train_number = gets.chomp.to_i
+    current_train = trains[train_number-1]
+
+    current_train.go_prev_station
+    p next_step
   when 13
     p stations
   when 14
+    p "Choose station to view?"
+    stations.each.with_index(1) do |st, index| 
+      p "#{index} - #{st.station_name}"
+    end
+    station_to_view = gets.chomp.to_i
+    current_station = stations[station_to_view-1]
+    p stations
+    p current_station
+    #p current_station.trains
+    p current_station.list_of_train_in_station
 
+    p next_step
   when 15
     p trains
   when 16

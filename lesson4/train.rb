@@ -36,16 +36,24 @@ class Train
   end
 
   def del_wagon(wagon)
-    wagons.delete(wagon) if @speed == 0
+    del_wagon_protected(wagon)
   end  
 
+  def add_wagon(wagon)
+    add_wagon_protected(wagon)
+  end
+  
   #у каждого поезда есть действия выше (для удаления вагона не важно знать его тип)
   protected
 
-  #здесь необходимо знать тип вагона, выносим метод в дочерний класс, там и присваиваем тип вагону
-  def add_wagon(wagon)
-    wagons << wagon if @speed == 0 
+  def del_wagon_protected(wagon)
+    wagons.delete(wagon) if @speed == 0
   end
 
+  def del_wagon_protected(wagon)
+    wagons << wagon if @speed == 0
+  end
+
+  #наверное, как-то так, для примера?
 
 end
