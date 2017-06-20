@@ -87,17 +87,20 @@ p "4.  Создать маршрут"
 p "5.  Добавить станцию в маршрут"
 p "6.  Удалить станцию из маршрута"
 p "7.  Назначить маршрут поезду"
-p "8.  Добавить вагон к поезду"
-p "9.  Отцепить вагон от поезда"
-p "10. Поехать к следующей станции"
-p "11. Вернуться к предыдущей станции"
-p "12. Просмотреть список станций"
-p "13. Просмотреть список поездов на станции"
-p "14. просмотреть список всех поездов"
+p "8.  Создать вагон"
+p "9.  Добавить вагон к поезду"
+p "10. Отцепить вагон от поезда"
+p "11. Поехать к следующей станции"
+p "12. Вернуться к предыдущей станции"
+p "13. Просмотреть список станций"
+p "14. Просмотреть список поездов на станции"
+p "15. просмотреть список всех поездов"
+p "16. просмотреть список всех вагонов"
 
 stations = []
 trains   = []
 routes   = []
+wagons   = []
 
 def next_step
   "next step, please"
@@ -178,7 +181,7 @@ begin
     current_route.add_station(tmp_station[station_to_add-1])
     p current_route
     p next_step
-  when 6
+  when 6    #---------------------------------------------
     p "Choose route to del a station"
     routes.each.with_index(1) do |route, index| 
       p "#{index} - #{route}"
@@ -195,12 +198,64 @@ begin
     current_route.del_station(tmp_station[station_to_del-1])
     p current_route
     p next_step
-    
-  when 12
-    p stations
-  when 13
+  when 7    #---------------------------------------------
+    p "Choose train"
+    trains.each.with_index(1) do |train, index| 
+      p "#{index} - #{train.number}"
+    end
+    train_number = gets.chomp.to_i
+    current_train = trains[train_number-1]
 
+    p "Choose route"
+    routes.each.with_index(1) do |route, index| 
+      p "#{index} - #{route}"
+    end
+    route_number  = gets.chomp.to_i
+    current_route = routes[route_number-1]
+
+    current_train.set_route(current_route)
+    p "to train #{current_train.number} set up the route #{current_route}"
+    p next_step
+  when 8    #---------------------------------------------
+    p "What type of wagon would you like to create? (1 - pass, 2 - cargo)"
+    wagon_type = gets.chomp.to_i
+    if wagon_type == 1 
+      wagons << PassengerWagon.new()
+      p wagons.last
+    elsif wagon_type == 2
+      wagons << CargoWagon.new()
+      p wagons.last
+    else 
+      p "type of wagon is not valid!"
+    end
+    p next_step
+  when 9    #---------------------------------------------  
+    p "Choose train"
+    trains.each.with_index(1) do |train, index| 
+      p "#{index} - #{train.number}"
+    end
+    train_number = gets.chomp.to_i
+    current_train = trains[train_number-1]
+
+    p "Choose wagon"
+    wagons.each.with_index(1) do |wagon, index| 
+      p "#{index} - #{wagon}"
+    end
+    wagon_number = gets.chomp.to_i
+    current_wagon = wagons[wagon_number-1]
+    current_train.add_wagon(current_wagon)  
+    #как не удалять из списка свободных вагонов тот, который не подошел по типу поезда?
+    wagons.delete(current_wagon)  
+
+    p current_train
+    p next_step
+  when 13
+    p stations
   when 14
+
+  when 15
     p trains
+  when 16
+    p wagons
   end
 end while answer != 1
