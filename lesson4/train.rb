@@ -9,6 +9,10 @@ class Train
     @speed  = 0
   end
 
+  def addSpeed(speed)
+    @speed = speed
+  end
+
   def set_route(route)
     @route = route
     @current_station = route.stations[0]
@@ -53,7 +57,6 @@ class Train
   def del_wagon_protected(wagon)
     wagons << wagon if @speed == 0
   end
-
   #наверное, как-то так, для примера?
 
 end
