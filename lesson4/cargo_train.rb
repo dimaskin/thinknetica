@@ -1,5 +1,5 @@
 class CargoTrain < Train
   def add_wagon(wagon)
-    super if wagon.class.to_s == "CargoWagon"
+    super if wagon.is_a? CargoWagon
   end
 end

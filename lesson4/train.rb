@@ -54,7 +54,7 @@ class Train
     wagons.delete(wagon) if @speed == 0
   end
 
-  def del_wagon_protected(wagon)
+  def add_wagon_protected(wagon)
     wagons << wagon if @speed == 0
   end
   #наверное, как-то так, для примера?
