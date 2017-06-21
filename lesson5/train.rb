@@ -3,10 +3,21 @@ class Train
   attr_accessor :speed, :current_station, :wagons
   attr_reader   :route, :number
 
+  @@trains = {}
+
   def initialize(number)
     @number = number
     @wagons = []
     @speed  = 0
+    @@trains[number] = self
+  end
+
+  def self.all
+    @@trains
+  end
+
+  def self.find(number)
+    @@trains[number]
   end
 
   def addSpeed(speed)
