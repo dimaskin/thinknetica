@@ -1,4 +1,5 @@
 class Controller
+  include CommonValidate
   attr_accessor :stations, :trains, :routes, :wagons
 
   def initialize
@@ -11,13 +12,8 @@ class Controller
   def create_station
     p "station name?"
     station_name = gets.chomp.to_s
-    if station_name
-      stations << Station.new(station_name)
-      p stations.last
-      p next_step
-    else
-      p "station name is not valid!"
-    end
+    stations << Station.new(station_name) if !val_is_blank?(station_name)
+    p next_step
   end
 
   def create_train
