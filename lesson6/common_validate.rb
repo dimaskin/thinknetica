@@ -1,0 +1,3 @@
+module CommonValidate
+
+end
