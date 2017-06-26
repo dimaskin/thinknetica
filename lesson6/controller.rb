@@ -12,7 +12,7 @@ class Controller
   def create_station
     p "station name?"
     station_name = gets.chomp.to_s
-    stations << Station.new(station_name) if !val_is_blank?(station_name)
+    stations << Station.new(station_name)
     p next_step
   end
 
