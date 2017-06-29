@@ -7,6 +7,5 @@ require_relative 'cargo_train'
 require_relative 'cargo_wagon'
 require_relative 'passenger_wagon'
 require_relative 'controller'
-require_relative 'Manufacturer'
 
 Controller.new.control_begin

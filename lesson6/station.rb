@@ -1,11 +1,13 @@
 class Station
-  include CommonValidate
+  #include CommonValidate
+  require_relative 'common_validate'
+
   attr_reader :trains, :station_name
   @@stations = []
 
   def initialize(station_name)
-    valid?(station_name) #only name
     @station_name = station_name
+    valid?
     @trains = []
     @@stations << self
   end
@@ -33,7 +35,8 @@ class Station
 
   protected
 
-  def valid?(val)
-    val_is_empty?(val)
+  def valid?  
+    raise "Station name can not be empty!" if @station_name.empty?
+    true
   end
 end
