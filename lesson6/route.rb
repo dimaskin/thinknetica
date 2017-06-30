@@ -2,13 +2,9 @@ class Route
   attr_reader :stations
 
   def initialize(start_station, end_station)
-    valid?
+    validate!
     @stations = []
     @stations  << start_station << end_station
-  end
-
-  def valid?
-    validate!
   end
 
   def add_station(station)
@@ -30,9 +26,13 @@ class Route
   protected
 
   def validate!
-    raise "start_station can not be empty!" if @start_station.is_a? Station
-    raise "end_station can not be empty!"   if @end_station.is_a? Station
-    true
+    begin
+      raise ArgumentError, "start_station can not be empty!" if @start_station.is_a? Station
+      raise ArgumentError, "end_station can not be empty!"   if @end_station.is_a? Station
+      true
+    rescue 
+      p "start_station and end_station can not be empty!"
+    end
   end
 
 end

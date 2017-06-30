@@ -1,10 +1,8 @@
-class Train
-  require_relative 'manufacturer'
-  require_relative 'common_validate'
-  require_relative 'instance_counter'
+require_relative 'manufacturer'
+require_relative 'instance_counter'
 
+class Train
   include InstanceCounter
-  include CommonValidate
 
   attr_accessor :speed, :current_station, :wagons
   attr_reader   :route, :number
@@ -20,10 +18,6 @@ class Train
     @speed  = 0
     @@trains[number] = self
     register_instance
-  end
-
-  def valid?
-    validate!
   end
 
   def self.all
@@ -82,9 +76,13 @@ class Train
   end
 
   def validate!
-    raise "Number can not be empty!" if @number.empty?
-    raise "Wrong number format!" if @number !~ TRAIN_NUMBER_TEMPLATE
-    true
+    begin
+      raise ArgumentError, "Number can not be empty!" if @number.empty?
+      raise ArgumentError, "Wrong number format!" if @number !~ TRAIN_NUMBER_TEMPLATE
+      true
+    rescue  
+      p "Wrong number!"
+    end
   end
 
 end

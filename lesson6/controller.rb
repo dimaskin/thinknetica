@@ -1,5 +1,4 @@
 class Controller
-  include CommonValidate
   attr_accessor :stations, :trains, :routes, :wagons
 
   def initialize

@@ -1,6 +1,4 @@
 class Station
-  require_relative 'common_validate'
-  include CommonValidate
 
   attr_reader :trains, :station_name
   @@stations = []
@@ -10,10 +8,6 @@ class Station
     validate!
     @trains = []
     @@stations << self
-  end
-
-  def valid?
-    validate!
   end
 
   def self.all
@@ -38,8 +32,13 @@ class Station
 
   protected
 
-  def validate!  
-    raise "Station name can not be empty!" if @station_name.empty?
-    true
+  def validate!
+    begin   
+      raise ArgumentError, "Station name can not be empty!" if @station_name.empty?
+      true
+    rescue
+      p "Station name can not be empty!!"
+      false
+    end
   end
 end
