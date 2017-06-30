@@ -1,5 +1,7 @@
 class Train
   require_relative 'manufacturer'
+  require_relative 'common_validate'
+  require_relative 'instance_counter'
 
   include InstanceCounter
   include CommonValidate
@@ -77,7 +79,7 @@ class Train
 
   def valid?
     raise "Number can not be empty!" if @number.empty?
-    raise "Wrong number format!" if @number !=~ TRAIN_NUMBER_TEMPLATE
+    raise "Wrong number format!" if @number !~ TRAIN_NUMBER_TEMPLATE
     true
   end
 

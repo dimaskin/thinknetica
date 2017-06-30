@@ -1,6 +1,6 @@
 class Station
-  #include CommonValidate
   require_relative 'common_validate'
+  include CommonValidate
 
   attr_reader :trains, :station_name
   @@stations = []
