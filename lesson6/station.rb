@@ -7,11 +7,14 @@ class Station
 
   def initialize(station_name)
     @station_name = station_name
-    valid?
+    validate!
     @trains = []
     @@stations << self
   end
 
+  def valid?
+    validate!
+  end
 
   def self.all
     @@stations
@@ -35,7 +38,7 @@ class Station
 
   protected
 
-  def valid?  
+  def validate!  
     raise "Station name can not be empty!" if @station_name.empty?
     true
   end

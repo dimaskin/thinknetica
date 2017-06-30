@@ -15,11 +15,15 @@ class Train
 
   def initialize(number)
     @number = number
-    valid?
+    validate!
     @wagons = []
     @speed  = 0
     @@trains[number] = self
     register_instance
+  end
+
+  def valid?
+    validate!
   end
 
   def self.all
@@ -77,7 +81,7 @@ class Train
     wagons << wagon if @speed == 0
   end
 
-  def valid?
+  def validate!
     raise "Number can not be empty!" if @number.empty?
     raise "Wrong number format!" if @number !~ TRAIN_NUMBER_TEMPLATE
     true

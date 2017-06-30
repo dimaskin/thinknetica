@@ -1,5 +1,6 @@
 module CommonValidate
 
+
   protected
   
   def valid?

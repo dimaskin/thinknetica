@@ -7,6 +7,10 @@ class Route
     @stations  << start_station << end_station
   end
 
+  def valid?
+    validate!
+  end
+
   def add_station(station)
     stations.insert(-2,station)
   end
@@ -25,7 +29,7 @@ class Route
 
   protected
 
-  def valid?
+  def validate!
     raise "start_station can not be empty!" if @start_station.is_a? Station
     raise "end_station can not be empty!"   if @end_station.is_a? Station
     true
