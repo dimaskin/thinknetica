@@ -66,6 +66,17 @@ class Train
     add_wagon_protected(wagon)
   end
   
+  #опять добавил 2 метода, valid? && validate!
+  #однако непонятно, если в initialize проверяем на валидность (например, номер поезда не пустой), то, если объект _уже_ существует
+  #то значит у него все параметры валидны. Если метод valid? применяется к существующему объекту и выкидывает исключение, то как такой
+  #объект был создан?
+  def valid?
+    validate!
+  rescue
+    false
+  end
+  #########################################################################?
+
   protected
   def del_wagon_protected(wagon)
     wagons.delete(wagon) if @speed == 0
@@ -76,13 +87,9 @@ class Train
   end
 
   def validate!
-    begin
-      raise ArgumentError, "Number can not be empty!" if @number.empty?
-      raise ArgumentError, "Wrong number format!" if @number !~ TRAIN_NUMBER_TEMPLATE
-      true
-    rescue  
-      p "Wrong number!"
-    end
+    raise ArgumentError, "Number can not be empty!" if @number.empty?
+    raise ArgumentError, "Wrong number format!" if @number !~ TRAIN_NUMBER_TEMPLATE
+    true
   end
 
 end

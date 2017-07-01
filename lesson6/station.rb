@@ -30,15 +30,22 @@ class Station
     @trains.delete(train)
   end
 
+  #опять добавил 2 метода, valid? && validate!
+  #однако непонятно, если в initialize проверяем на валидность (например, имя станции не пустое), то, если объект _уже_ существует
+  #то значит у него все параметры валидны. Если метод valid? применяется к существующему объекту и выкидывает исключение, то как такой
+  #объект был создан?
+  def valid?
+    validate!
+  rescue
+    false
+  end
+  #########################################################################?
+
+
   protected
 
   def validate!
-    begin   
-      raise ArgumentError, "Station name can not be empty!" if @station_name.empty?
-      true
-    rescue
-      p "Station name can not be empty!!"
-      false
-    end
+    raise ArgumentError, "Station name can not be empty!" if @station_name.empty?
+    true
   end
 end

@@ -23,16 +23,23 @@ class Route
     stations.last
   end
 
+  #опять добавил 2 метода, valid? && validate!
+  #однако непонятно, если в initialize проверяем на валидность (например, станции не пустые), то, если объект _уже_ существует
+  #то значит у него все параметры валидны. Если метод valid? применяется к существующему объекту и выкидывает исключение, то как такой
+  #объект был создан?
+  def valid?
+    validate!
+  rescue
+    false
+  end
+  #########################################################################?
+
   protected
 
   def validate!
-    begin
-      raise ArgumentError, "start_station can not be empty!" if @start_station.is_a? Station
-      raise ArgumentError, "end_station can not be empty!"   if @end_station.is_a? Station
-      true
-    rescue 
-      p "start_station and end_station can not be empty!"
-    end
+    raise ArgumentError, "start_station can not be empty!" if @start_station.is_a? Station
+    raise ArgumentError, "end_station can not be empty!"   if @end_station.is_a? Station
+    true
   end
 
 end
