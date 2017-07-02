@@ -233,6 +233,10 @@ class Controller
       p trains
     when 16
       p wagons
+    when 17
+      
+      
+
     end #case
     end #loop
   end
@@ -258,6 +262,7 @@ class Controller
     p "14. Просмотреть список поездов на станции"
     p "15. просмотреть список всех поездов"
     p "16. просмотреть список всех вагонов"
+    p "17. Просмотреть всю информацию"
   end
 
 end
