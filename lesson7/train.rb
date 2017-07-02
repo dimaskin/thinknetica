@@ -18,6 +18,11 @@ class Train
     @speed  = 0
     @@trains[number] = self
     register_instance
+    @block = lambda { |t| puts t }
+  end
+
+  def puts_wagons
+    @block.call(@wagons)
   end
 
   def self.all

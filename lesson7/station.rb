@@ -8,6 +8,11 @@ class Station
     validate!
     @trains = []
     @@stations << self
+    @block = lambda { |t| puts t }
+  end
+
+  def puts_trains
+    @block.call(@trains)
   end
 
   def self.all
@@ -30,17 +35,11 @@ class Station
     @trains.delete(train)
   end
 
-  #опять добавил 2 метода, valid? && validate!
-  #однако непонятно, если в initialize проверяем на валидность (например, имя станции не пустое), то, если объект _уже_ существует
-  #то значит у него все параметры валидны. Если метод valid? применяется к существующему объекту и выкидывает исключение, то как такой
-  #объект был создан?
   def valid?
     validate!
   rescue
     false
   end
-  #########################################################################?
-
 
   protected
 
