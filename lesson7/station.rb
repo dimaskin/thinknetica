@@ -1,13 +1,14 @@
 class Station
 
   attr_reader :trains, :station_name
-  @@stations = []
+  @@stations_cl = []
 
   def initialize(station_name)
     @station_name = station_name
     validate!
     @trains = []
-    @@stations << self
+    @@stations_cl << self
+    #@block = lambda { |t| puts "Train number: #{t.number}, train type: #{t.type}" }
     @block = lambda { |t| puts t }
   end
 
@@ -16,7 +17,7 @@ class Station
   end
 
   def self.all
-    @@stations
+    @@stations_cl
   end
 
   def admission_train(train)

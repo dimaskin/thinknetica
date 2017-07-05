@@ -6,12 +6,19 @@ class Controller
     @trains   = []
     @routes   = []
     @wagons   = []
+
+    #new data
+    @stations << Station.new("station 1 nd")
+    @stations << Station.new("station 2 nd")
+    @trains   << PassengerTrain.new("pass1")
+    @trains   << CargoTrain.new("cargo")
+    @routes   << Route.new(@stations.first, @stations.last)
   end
 
   def create_station
     p "station name?"
     station_name = gets.chomp.to_s
-    stations << Station.new(station_name)
+    @stations << Station.new(station_name)
     p next_step
   end
 
@@ -20,13 +27,13 @@ class Controller
     train_name = gets.chomp.to_s
     p "train type? (1 - pass, 2 - cargo)"
     train_type = gets.chomp.to_i
-    trains << PassengerTrain.new(train_name) if train_name && train_type == 1
-    trains << CargoTrain.new(train_name) if train_name && train_type == 2
+    @trains << PassengerTrain.new(train_name) if train_name && train_type == 1
+    @trains << CargoTrain.new(train_name) if train_name && train_type == 2
     p next_step
   end
 
   def create_route
-    tmp_station = stations
+    tmp_station = @stations
     p "Create new route. Choose start station?"
     tmp_station.each.with_index(1) do |st, index| 
       p "#{index} - #{st.station_name}"
@@ -39,19 +46,19 @@ class Controller
     end
     finish_number = gets.chomp.to_i
     finish_station = tmp_station.delete_at(finish_number-1)
-    routes << Route.new(start_station, finish_station)
-    p routes.last
+    @routes << Route.new(start_station, finish_station)
+    p @routes.last
     p next_step
   end
 
   def add_station_to_route
     p "Choose route to add a station"
-    routes.each.with_index(1) do |route, index| 
+    @routes.each.with_index(1) do |route, index| 
       p "#{index} - #{route}"
     end
     route_number  = gets.chomp.to_i
-    current_route = routes[route_number-1]
-    tmp_station = stations
+    current_route = @routes[route_number-1]
+    tmp_station = @stations
     tmp_station.delete(current_route.start_station)
     tmp_station.delete(current_route.end_station)
     p "Choose station to add?"
@@ -66,12 +73,12 @@ class Controller
 
   def del_station_from_route
     p "Choose route to del a station"
-    routes.each.with_index(1) do |route, index| 
+    @routes.each.with_index(1) do |route, index| 
       p "#{index} - #{route}"
     end
     route_number  = gets.chomp.to_i
-    current_route = routes[route_number-1]
-    tmp_station = stations
+    current_route = @routes[route_number-1]
+    tmp_station = @stations
     p "Choose station to delete?"
     tmp_station.each.with_index(1) do |st, index| 
       p "#{index} - #{st.station_name}"
@@ -84,18 +91,18 @@ class Controller
 
   def set_route_to_train
     p "Choose train"
-    trains.each.with_index(1) do |train, index| 
+    @trains.each.with_index(1) do |train, index| 
       p "#{index} - #{train.number}"
     end
     train_number = gets.chomp.to_i
-    current_train = trains[train_number-1]
+    current_train = @trains[train_number-1]
 
     p "Choose route"
-    routes.each.with_index(1) do |route, index| 
+    @routes.each.with_index(1) do |route, index| 
       p "#{index} - #{route}"
     end
     route_number  = gets.chomp.to_i
-    current_route = routes[route_number-1]
+    current_route = @routes[route_number-1]
 
     current_train.set_route(current_route)
     p "to train #{current_train.number} set up the route #{current_route}"
@@ -185,12 +192,21 @@ class Controller
 
   def trains_at_station
     p "Choose station to view?"
-    stations.each.with_index(1) do |st, index| 
+    @stations.each.with_index(1) do |st, index| 
       p "#{index} - #{st.station_name}"
     end
     station_to_view = gets.chomp.to_i
-    current_station = stations[station_to_view-1]
+    current_station = @stations[station_to_view-1]
     p current_station.list_of_train_in_station
+    p next_step
+  end
+
+
+  def show_all
+    @stations.each do |temp_station|
+      p temp_station.puts_trains
+      #p 1111222
+    end
     p next_step
   end
 
@@ -203,7 +219,6 @@ class Controller
       p "bay"
       break
     when 2    #---------------------------------------------
-      p stations
       create_station
     when 3    #---------------------------------------------
       create_train
@@ -226,7 +241,7 @@ class Controller
     when 12   #---------------------------------------------  
       go_prev_station
     when 13
-      p stations
+      p @stations
     when 14
       trains_at_station
     when 15
@@ -235,7 +250,7 @@ class Controller
       p wagons
     when 17
       
-      
+      show_all
 
     end #case
     end #loop
