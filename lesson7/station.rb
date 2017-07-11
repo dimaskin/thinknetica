@@ -12,6 +12,9 @@ class Station
     @block = lambda do |t| 
       t.map { |x| "Train number: #{x.number}, train type: #{x.class}" }
     end
+
+    #как сделать перебор вагонов внутри поезда? еще один map для x ?
+
   end
 
   #Номер поезда, тип, кол-во вагонов
