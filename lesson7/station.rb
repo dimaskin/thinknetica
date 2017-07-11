@@ -9,8 +9,12 @@ class Station
     @trains = []
     @@stations_cl << self
     #@block = lambda { |t| puts "Train number: #{t.number}, train type: #{t.type}" }
-    @block = lambda { |t| puts t }
+    @block = lambda do |t| 
+      t.map { |x| "Train number: #{x.number}, train type: #{x.class}" }
+    end
   end
+
+  #Номер поезда, тип, кол-во вагонов
 
   def puts_trains
     @block.call(@trains)
