@@ -16,7 +16,7 @@ class Station
 
   #Номер поезда, тип, кол-во вагонов
 
-  def puts_trains(&block)
+  def each_train(&block)
     @trains.each_with_index  { |train,id | yield(train, id) }
   end
 

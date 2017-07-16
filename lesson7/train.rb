@@ -21,7 +21,7 @@ class Train
     @block = lambda { |t| puts t }
   end
 
-  def puts_wagons
+  def each_wagon
     @wagons.each_with_index { |wagon, id| yield(wagon, id) }
   end
 
