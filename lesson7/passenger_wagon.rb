@@ -2,7 +2,7 @@ class PassengerWagon < Wagon
 
   attr_reader :place_count, :place_busy
 
-  def initialize (place_count)
+  def initialize (place_count=100)
   	@place_count = place_count
     @place_busy  = 0
   end

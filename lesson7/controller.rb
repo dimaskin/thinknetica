@@ -203,10 +203,20 @@ class Controller
 
 
   def show_all
-    @stations.each do |temp_station|
-      p temp_station.puts_trains
-      #p 1111222
+    @stations.each do |temp_station| # перебираем станции
+      #p temp_station
+      temp_station.puts_trains do | train, id| # перебираем поезда на станции
+        puts "#{id}: № #{train.number}, тип: #{train.class}, вагонов: #{train.wagons.count} "
+        train.puts_wagons do |wagon, id|
+          if wagon.class == :passenger
+            puts "Вагон №#{id}: пассажирский, свободно/занято мест: #{wagon.place_count}/#{wagon.place_busy}"
+          else
+            puts "Вагон №#{id}: грузовой, всего/свободно/занято объема: #{wagon.volume}/#{wagon.free_volume}/#{wagon.wagon_load}"
+          end
+        end
+      end      
     end
+
     p next_step
   end
 

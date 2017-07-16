@@ -22,7 +22,7 @@ class Train
   end
 
   def puts_wagons
-    @block.call(@wagons)
+    @wagons.each_with_index { |wagon, id| yield(wagon, id) }
   end
 
   def self.all
@@ -71,16 +71,11 @@ class Train
     add_wagon_protected(wagon)
   end
   
-  #опять добавил 2 метода, valid? && validate!
-  #однако непонятно, если в initialize проверяем на валидность (например, номер поезда не пустой), то, если объект _уже_ существует
-  #то значит у него все параметры валидны. Если метод valid? применяется к существующему объекту и выкидывает исключение, то как такой
-  #объект был создан?
   def valid?
     validate!
   rescue
     false
   end
-  #########################################################################?
 
   protected
   def del_wagon_protected(wagon)

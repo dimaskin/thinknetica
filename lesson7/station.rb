@@ -9,18 +9,15 @@ class Station
     @trains = []
     @@stations_cl << self
     #@block = lambda { |t| puts "Train number: #{t.number}, train type: #{t.type}" }
-    @block = lambda do |t| 
-      t.map { |x| "Train number: #{x.number}, train type: #{x.class}" }
-    end
-
-    #как сделать перебор вагонов внутри поезда? еще один map для x ?
-
+    #@block = lambda do |t| 
+    #  t.map { |x| "Train number: #{x.number}, train type: #{x.class}" }
+    #end
   end
 
   #Номер поезда, тип, кол-во вагонов
 
-  def puts_trains
-    @block.call(@trains)
+  def puts_trains(&block)
+    @trains.each_with_index  { |train,id | yield(train, id) }
   end
 
   def self.all
