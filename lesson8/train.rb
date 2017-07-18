@@ -18,7 +18,7 @@ class Train
     @speed  = 0
     @@trains[number] = self
     register_instance
-    @block = lambda { |t| puts t }
+    @block = ->(t) { puts t }
   end
 
   def each_wagon
@@ -33,11 +33,11 @@ class Train
     @@trains[number]
   end
 
-  def addSpeed(speed)
+  def add_speed(speed)
     @speed = speed
   end
 
-  def set_route(route)
+  def establish_route(route)
     @route = route
     @current_station = route.stations[0]
     @current_station.admission_train(self)
@@ -45,32 +45,32 @@ class Train
 
   def go_next_station
     @current_station.dispatch_train(self)
-    @current_station = @route.stations[@route.stations.index(@current_station)+1]
-    @current_station.admission_train(self)    
+    @current_station = @route.stations[@route.stations.index(@current_station) + 1]
+    @current_station.admission_train(self)
   end
 
   def go_prev_station
     @current_station.dispatch_train(self)
-    @current_station = @route.stations[@route.stations.index(@current_station)-1]
-    @current_station.admission_train(self)    
+    @current_station = @route.stations[@route.stations.index(@current_station) - 1]
+    @current_station.admission_train(self)
   end
 
   def next_station
-    @route.stations[@route.stations.index(@current_station)+1]
+    @route.stations[@route.stations.index(@current_station) + 1]
   end
 
   def prev_station
-    @route.stations[@route.stations.index(@current_station)-1]
+    @route.stations[@route.stations.index(@current_station) - 1]
   end
 
   def del_wagon(wagon)
     del_wagon_protected(wagon)
-  end  
+  end
 
   def add_wagon(wagon)
     add_wagon_protected(wagon)
   end
-  
+
   def valid?
     validate!
   rescue
@@ -78,18 +78,18 @@ class Train
   end
 
   protected
+
   def del_wagon_protected(wagon)
-    wagons.delete(wagon) if @speed == 0
+    wagons.delete(wagon) if @speed.zero?
   end
 
   def add_wagon_protected(wagon)
-    wagons << wagon if @speed == 0
+    wagons << wagon if @speed.zero?
   end
 
   def validate!
-    raise ArgumentError, "Number can not be empty!" if @number.empty?
-    raise ArgumentError, "Wrong number format!" if @number !~ TRAIN_NUMBER_TEMPLATE
+    raise ArgumentError, 'Number can not be empty!' if @number.empty?
+    raise ArgumentError, 'Wrong number format!' if @number !~ TRAIN_NUMBER_TEMPLATE
     true
   end
-
 end

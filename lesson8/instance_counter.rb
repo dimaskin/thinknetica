@@ -10,15 +10,16 @@ module InstanceCounter
     end
 
     protected
-    def add_instances() 
+
+    def add_instances
       @instances ||= 0
       @instances += 1
     end
-
   end
 
   module InstanceMethods
     protected
+
     def register_instance
       self.class.send(:add_instances)
     end
