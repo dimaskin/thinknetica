@@ -6,8 +6,10 @@ class Controller
     @trains   = []
     @routes   = []
     @wagons   = []
+    set_default_data
+  end
 
-    #new data
+  def set_default_data
     @stations << Station.new("station 1 nd")
     @stations << Station.new("station 2 nd")
     @trains   << PassengerTrain.new("pass1")
@@ -38,14 +40,12 @@ class Controller
     tmp_station.each.with_index(1) do |st, index| 
       p "#{index} - #{st.station_name}"
     end
-    start_number = gets.chomp.to_i
-    start_station = tmp_station.delete_at(start_number-1)
+    start_station = tmp_station.delete_at(gets.chomp.to_i - 1)
     p "Choose final station?"
     tmp_station.each.with_index(1) do |st, index| 
       p "#{index} - #{st.station_name}"
     end
-    finish_number = gets.chomp.to_i
-    finish_station = tmp_station.delete_at(finish_number-1)
+    finish_station = tmp_station.delete_at(gets.chomp.to_i - 1)
     @routes << Route.new(start_station, finish_station)
     p @routes.last
     p next_step
