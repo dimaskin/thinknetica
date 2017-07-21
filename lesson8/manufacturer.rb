@@ -1,9 +1,9 @@
 module Manufacturer
-  def set_manufacturer(name)
+  def establish_manufacturer(name)
     self.manufacturer = name
   end
 
-  def get_manufacturer
+  def receive_manufacturer
     manufacturer
   end
 

@@ -1,11 +1,10 @@
 class Station
   attr_reader :trains, :station_name
-  @@stations_cl = []
+  @@stations_cl ||= []
   def initialize(station_name)
     @station_name = station_name
     validate!
     @trains = []
-
     @@stations_cl << self
   end
 
