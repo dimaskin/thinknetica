@@ -1,6 +1,26 @@
 class Controller
   attr_accessor :stations, :trains, :routes, :wagons
 
+  ACTIONS = {
+    '1' => :say_bay,
+    '2' => :create_station,
+    '3' => :create_train,
+    '4' => :create_route,
+    '5' => :add_station_to_route,
+    '6' => :del_station_from_route,
+    '7' => :set_route_to_train,
+    '8' => :create_wagon,
+    '9' => :add_wagon_to_train,
+    '10' => :del_wagon_from_train,
+    '11' => :go_next_station,
+    '12' => :go_prev_station,
+    '13' => :show_stations,
+    '14' => :trains_at_station,
+    '15' => :show_trains,
+    '16' => :show_wagons,
+    '17' => :show_all,
+  }.freeze
+
   def initialize
     @stations = []
     @trains   = []
@@ -219,6 +239,18 @@ class Controller
     p next_step
   end
 
+  def show_stations
+    p @stations
+  end
+
+  def show_trains
+    p @trains
+  end
+
+  def show_wagons
+    p @wagons
+  end
+
   def control_begin
     command_list
     loop do
@@ -250,13 +282,13 @@ class Controller
       when 12   #---------------------------------------------
         go_prev_station
       when 13
-        p @stations
+        show_stations
       when 14
         trains_at_station
       when 15
-        p trains
+        show_trains
       when 16
-        p wagons
+        show_wagons
       when 17
 
         show_all
