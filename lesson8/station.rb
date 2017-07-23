@@ -1,6 +1,11 @@
 class Station
   attr_reader :trains, :station_name
+
+  #Replace class var @@stations_cl with a class instance var.
+  #так и не понял - как победить
   @@stations_cl ||= []
+
+
   def initialize(station_name)
     @station_name = station_name
     validate!

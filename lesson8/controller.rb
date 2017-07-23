@@ -18,7 +18,7 @@ class Controller
     '14' => :trains_at_station,
     '15' => :show_trains,
     '16' => :show_wagons,
-    '17' => :show_all,
+    '17' => :show_all
   }.freeze
 
   def initialize
@@ -27,12 +27,13 @@ class Controller
     @routes   = []
     @wagons   = []
 
-    # new data
+    # set default data
     @stations << Station.new('station 1 nd')
     @stations << Station.new('station 2 nd')
     @trains   << PassengerTrain.new('pass1')
     @trains   << CargoTrain.new('cargo')
     @routes   << Route.new(@stations.first, @stations.last)
+    @trains.last.establish_route(@routes.last)
   end
 
   def create_station
@@ -55,15 +56,11 @@ class Controller
   def create_route
     tmp_station = @stations
     p 'Create new route. Choose start station?'
-    tmp_station.each.with_index(1) do |st, index|
-      p "#{index} - #{st.station_name}"
-    end
+    tmp_station.each.with_index(1) { |st, index| p "#{index} - #{st.station_name}" }
     start_number = gets.chomp.to_i
     start_station = tmp_station.delete_at(start_number - 1)
     p 'Choose final station?'
-    tmp_station.each.with_index(1) do |st, index|
-      p "#{index} - #{st.station_name}"
-    end
+    tmp_station.each.with_index(1) { |st, index| p "#{index} - #{st.station_name}" }
     finish_number = gets.chomp.to_i
     finish_station = tmp_station.delete_at(finish_number - 1)
     @routes << Route.new(start_station, finish_station)
@@ -73,18 +70,14 @@ class Controller
 
   def add_station_to_route
     p 'Choose route to add a station'
-    @routes.each.with_index(1) do |route, index|
-      p "#{index} - #{route}"
-    end
+    @routes.each.with_index(1) { |route, index| p "#{index} - #{route}" }
     route_number  = gets.chomp.to_i
     current_route = @routes[route_number - 1]
     tmp_station = @stations
     tmp_station.delete(current_route.start_station)
     tmp_station.delete(current_route.end_station)
     p 'Choose station to add?'
-    tmp_station.each.with_index(1) do |st, index|
-      p "#{index} - #{st.station_name}"
-    end
+    tmp_station.each.with_index(1) { |st, index| p "#{index} - #{st.station_name}" }
     station_to_add = gets.chomp.to_i
     current_route.add_station(tmp_station[station_to_add - 1])
     p current_route
@@ -93,16 +86,12 @@ class Controller
 
   def del_station_from_route
     p 'Choose route to del a station'
-    @routes.each.with_index(1) do |route, index|
-      p "#{index} - #{route}"
-    end
+    @routes.each.with_index(1) { |route, index| p "#{index} - #{route}" }
     route_number  = gets.chomp.to_i
     current_route = @routes[route_number - 1]
     tmp_station = @stations
     p 'Choose station to delete?'
-    tmp_station.each.with_index(1) do |st, index|
-      p "#{index} - #{st.station_name}"
-    end
+    tmp_station.each.with_index(1) { |st, index| p "#{index} - #{st.station_name}" }
     station_to_del = gets.chomp.to_i
     current_route.del_station(tmp_station[station_to_del - 1])
     p current_route
@@ -111,19 +100,13 @@ class Controller
 
   def set_route_to_train
     p 'Choose train'
-    @trains.each.with_index(1) do |train, index|
-      p "#{index} - #{train.number}"
-    end
+    @trains.each.with_index(1) { |train, index| p "#{index} - #{train.number}" }
     train_number = gets.chomp.to_i
     current_train = @trains[train_number - 1]
-
     p 'Choose route'
-    @routes.each.with_index(1) do |route, index|
-      p "#{index} - #{route}"
-    end
+    @routes.each.with_index(1) { |route, index| p "#{index} - #{route}" }
     route_number  = gets.chomp.to_i
     current_route = @routes[route_number - 1]
-
     current_train.establish_route(current_route)
     p "to train #{current_train.number} set up the route #{current_route}"
     p next_step
@@ -146,66 +129,48 @@ class Controller
 
   def add_wagon_to_train
     p 'Choose train'
-    trains.each.with_index(1) do |train, index|
-      p "#{index} - #{train.number}"
-    end
+    trains.each.with_index(1) { |train, index| p "#{index} - #{train.number}" }
     train_number = gets.chomp.to_i
     current_train = trains[train_number - 1]
-
     p 'Choose wagon to add'
-    wagons.each.with_index(1) do |wagon, index|
-      p "#{index} - #{wagon}"
-    end
+    wagons.each.with_index(1) { |wagon, index| p "#{index} - #{wagon}" }
     wagon_number = gets.chomp.to_i
     current_wagon = wagons[wagon_number - 1]
     current_train.add_wagon(current_wagon)
     wagons.delete(current_wagon)
-
     p current_train
     p next_step
   end
 
   def del_wagon_from_train
     p 'Choose train'
-    trains.each.with_index(1) do |train, index|
-      p "#{index} - #{train.number}"
-    end
+    trains.each.with_index(1) { |train, index| p "#{index} - #{train.number}" }
     train_number = gets.chomp.to_i
     current_train = trains[train_number - 1]
-
     p 'Choose wagon to delete'
-    current_train.wagons.each.with_index(1) do |wagon, index|
-      p "#{index} - #{wagon}"
-    end
+    current_train.wagons.each.with_index(1) { |wagon, index| p "#{index} - #{wagon}" }
     wagon_number = gets.chomp.to_i
     current_wagon = current_train.wagons[wagon_number - 1]
     current_train.del_wagon(current_wagon)
     wagons << current_wagon
-
     p current_train
     p next_step
   end
 
   def go_next_station
     p 'Choose train'
-    trains.each.with_index(1) do |train, index|
-      p "#{index} - #{train.number}"
-    end
+    trains.each.with_index(1) { |train, index| p "#{index} - #{train.number}" }
     train_number = gets.chomp.to_i
     current_train = trains[train_number - 1]
-
     current_train.go_next_station
     p next_step
   end
 
   def go_prev_station
     p 'Choose train'
-    trains.each.with_index(1) do |train, index|
-      p "#{index} - #{train.number}"
-    end
+    trains.each.with_index(1) { |train, index| p "#{index} - #{train.number}" }
     train_number = gets.chomp.to_i
     current_train = trains[train_number - 1]
-
     current_train.go_prev_station
     p next_step
   end
@@ -223,10 +188,9 @@ class Controller
 
   def show_all
     @stations.each do |temp_station| # перебираем станции
-      # p temp_station
       temp_station.each_train do |train, id| # перебираем поезда на станции
         puts "#{id}: № #{train.number}, тип: #{train.class}, вагонов: #{train.wagons.count} "
-        train.each_wagon do |wagon, id|
+        train.each_wagon do |wagon|
           if wagon.class == :passenger
             puts "Вагон №#{id}: пассажирский, свободно/занято мест: #{wagon.place_count}/#{wagon.place_busy}"
           else
@@ -235,7 +199,6 @@ class Controller
         end
       end
     end
-
     p next_step
   end
 
@@ -251,50 +214,9 @@ class Controller
     p @wagons
   end
 
-  def control_begin
-    command_list
-    loop do
-      answer = gets.chomp.to_i
-      case answer
-      when 1    #---------------------------------------------
-        p 'bay'
-        break
-      when 2    #---------------------------------------------
-        create_station
-      when 3    #---------------------------------------------
-        create_train
-      when 4    #---------------------------------------------
-        create_route
-      when 5    #---------------------------------------------
-        add_station_to_route
-      when 6    #---------------------------------------------
-        del_station_from_route
-      when 7    #---------------------------------------------
-        set_route_to_train
-      when 8    #---------------------------------------------
-        create_wagon
-      when 9    #---------------------------------------------
-        add_wagon_to_train
-      when 10   #---------------------------------------------
-        del_wagon_from_train
-      when 11   #---------------------------------------------
-        go_next_station
-      when 12   #---------------------------------------------
-        go_prev_station
-      when 13
-        show_stations
-      when 14
-        trains_at_station
-      when 15
-        show_trains
-      when 16
-        show_wagons
-      when 17
-
-        show_all
-
-      end # case
-    end # loop
+  def say_bay
+    p 'bay'
+    abort
   end
 
   def next_step
@@ -319,5 +241,18 @@ class Controller
     p '15. просмотреть список всех поездов'
     p '16. просмотреть список всех вагонов'
     p '17. Просмотреть всю информацию'
+  end
+
+  def action(answer)
+    method_to_run = ACTIONS.fetch(answer) { puts 'wrong number, choose 1-17' }
+    send(method_to_run)
+  end
+
+  def control_begin
+    command_list
+    loop do
+      answer = gets.chomp.to_s
+      action(answer)
+    end # loop
   end
 end
