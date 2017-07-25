@@ -20,5 +20,9 @@ module Accessors
       end
     end
 
+    def strong_attr_accessor(name, class_name)
+      self
+    end
+
   end
 end
