@@ -3,13 +3,16 @@ require_relative 'instance_counter'
 
 class Train
   include InstanceCounter
+  include Validation
 
   attr_accessor :speed, :current_station, :wagons
   attr_reader   :route, :number
+  
+  TRAIN_NUMBER_TEMPLATE = /^[a-z0-9]{3}-?[a-z0-9]{2}$/ 
+  
+  validate :number, :format, TRAIN_NUMBER_TEMPLATE
 
   @@trains = {}
-
-  TRAIN_NUMBER_TEMPLATE = /^[a-z0-9]{3}-?[a-z0-9]{2}$/
 
   def initialize(number)
     @number = number
@@ -87,9 +90,9 @@ class Train
     wagons << wagon if @speed.zero?
   end
 
-  def validate!
-    raise ArgumentError, 'Number can not be empty!' if @number.empty?
-    raise ArgumentError, 'Wrong number format!' if @number !~ TRAIN_NUMBER_TEMPLATE
-    true
-  end
+  #def validate!
+  #  raise ArgumentError, 'Number can not be empty!' if @number.empty?
+  #  raise ArgumentError, 'Wrong number format!' if @number !~ TRAIN_NUMBER_TEMPLATE
+  #  true
+  #end
 end

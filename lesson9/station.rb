@@ -1,16 +1,18 @@
 class Station
+  include Validation
+  
   attr_reader :trains, :station_name
 
-  #Replace class var @@stations_cl with a class instance var.
-  #так и не понял - как победить
-  @@stations_cl ||= []
+  validate :station_name, :presence
 
+  @@stations_cl ||= []
 
   def initialize(station_name)
     @station_name = station_name
     validate!
     @trains = []
     @@stations_cl << self
+    validate!
   end
 
   def each_train
@@ -43,10 +45,4 @@ class Station
     false
   end
 
-  protected
-
-  def validate!
-    raise ArgumentError, 'Station name can not be empty!' if @station_name.empty?
-    true
-  end
 end
